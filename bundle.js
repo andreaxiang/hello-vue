@@ -88,11 +88,18 @@ var app = new _vue2.default({
     window.onbeforeunload = function () {
       var dataString = JSON.stringify(_this.todoList);
       window.localStorage.setItem('myTodos', dataString);
+
+      var oneditString = JSON.stringify(_this.newTodo);
+      window.localStorage.setItem('typeTodo', oneditString);
     };
 
     var oldDataString = window.localStorage.getItem('myTodos');
     var oldData = JSON.parse(oldDataString);
     this.todoList = oldData || [];
+
+    var uncompleteDataString = window.localStorage.getItem('typeTodo');
+    var uncompleteData = JSON.parse(uncompleteDataString);
+    this.newTodo = uncompleteData || [];
   },
   methods: {
     addTodo: function addTodo() {

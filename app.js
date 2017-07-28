@@ -10,12 +10,18 @@ var app = new Vue({
     window.onbeforeunload = ()=>{
       let dataString = JSON.stringify(this.todoList)
       window.localStorage.setItem('myTodos', dataString)
+
+      let oneditString = JSON.stringify(this.newTodo)
+      window.localStorage.setItem('typeTodo', oneditString)
     }
 
     let oldDataString = window.localStorage.getItem('myTodos')
     let oldData = JSON.parse(oldDataString)
     this.todoList = oldData || []
 
+    let uncompleteDataString = window.localStorage.getItem('typeTodo')
+    let uncompleteData = JSON.parse(uncompleteDataString)
+    this.newTodo = uncompleteData || []
   },
   methods: {
     addTodo: function(){
