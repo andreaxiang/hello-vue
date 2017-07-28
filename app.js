@@ -24,7 +24,7 @@ var app = new Vue({
   },
   created: function(){
     window.onbeforeunload = ()=>{
-
+      // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
       let dataString = JSON.stringify(this.todoList)
       window.localStorage.setItem('myTodos', dataString)
       //获取newTodo未发布内容
@@ -47,10 +47,10 @@ var app = new Vue({
         createdAt: new Date(),
         done: false //添加一个 done 属性
       })
-      this.newTodo = ''; //输入完成之后清空
+      this.newTodo = ''; //输入完成之后清空newTodo
     },
 
-    //增加删除功能
+    //删除功能
     removeTodo: function(todo){
       let index = this.todoList.indexOf(todo) // Array.prototype.indexOf 是 ES 5 新加的 API
       this.todoList.splice(index,1)
@@ -85,7 +85,7 @@ var app = new Vue({
 
     //获取当前登录用户
     getCurrentUser: function(){
-      let {id, createdAt, attrubutes: {username}} = AV.User.current();
+      let {id, createdAt, attributes: {username}} = AV.User.current();
       // 我的《ES 6 新特性列表》里面有链接：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
       return {id, username, createdAt} // 看文档：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#ECMAScript_6%E6%96%B0%E6%A0%87%E8%AE%B0
     },
