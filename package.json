@@ -4,7 +4,8 @@
   "description": "使用前请先确保安装 npm 包： `npm i babel-loader babel-core babel-preset-es2015 babel-preset-react`",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
