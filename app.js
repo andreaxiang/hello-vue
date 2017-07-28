@@ -1,9 +1,18 @@
-import bar from './bar';
-import Vue from 'vue'
+import Vue from 'vue';
 
 var app = new Vue({
   el: '#app',
   data: {
-    message: 'Hello this is Andrea,here it is!'
+    newTodo: '',
+    todoList: []
+  },
+  methods: {
+    addTodo: function(){
+      this.todoList.push({
+        title: this.newTodo,
+        createdAt: new Date()
+      })
+      this.newTodo = ''; //输入完成之后清空
+    }
   }
 })

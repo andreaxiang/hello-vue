@@ -70,11 +70,7 @@
 "use strict";
 
 
-var _bar = __webpack_require__(1);
-
-var _bar2 = _interopRequireDefault(_bar);
-
-var _vue = __webpack_require__(2);
+var _vue = __webpack_require__(1);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -83,27 +79,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = new _vue2.default({
   el: '#app',
   data: {
-    message: 'Hello this is Andrea,here it is!'
+    newTodo: '',
+    todoList: []
+  },
+  methods: {
+    addTodo: function addTodo() {
+      this.todoList.push({
+        title: this.newTodo,
+        createdAt: new Date()
+      });
+      this.newTodo = ''; //输入完成之后清空
+    }
   }
 });
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = bar;
-function bar() {
-  alert("hello webpack, this is a test file!");
-}
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10195,10 +10186,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)))
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -10388,7 +10379,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 var g;
