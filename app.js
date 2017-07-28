@@ -3,14 +3,21 @@ import Vue from 'vue';
 var app = new Vue({
   el: '#app',
   data: {
+    actionType: 'signUp',
+    formData: {
+      username: '',
+      email: '',
+      password: ''
+    },
     newTodo: '',
     todoList: []
   },
   created: function(){
     window.onbeforeunload = ()=>{
+
       let dataString = JSON.stringify(this.todoList)
       window.localStorage.setItem('myTodos', dataString)
-
+      //获取newTodo未发布内容
       let oneditString = JSON.stringify(this.newTodo)
       window.localStorage.setItem('typeTodo', oneditString)
     }
@@ -18,7 +25,7 @@ var app = new Vue({
     let oldDataString = window.localStorage.getItem('myTodos')
     let oldData = JSON.parse(oldDataString)
     this.todoList = oldData || []
-
+    //本地保存newTodo未发布内容
     let uncompleteDataString = window.localStorage.getItem('typeTodo')
     let uncompleteData = JSON.parse(uncompleteDataString)
     this.newTodo = uncompleteData || []

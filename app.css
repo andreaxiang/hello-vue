@@ -69,6 +69,11 @@ body {
   box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.15);
 }
 
+#app #todo {
+  width:100%;
+  margin:0 auto;
+}
+
 #app .newTask {
   display: flex;
   width: 100%;

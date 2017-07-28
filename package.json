@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/andreaxiang/hello-vue/issues"
   },
-  "homepage": "https://github.com/andreaxiang/hello-vue#readme",
+  "homepage": "https://github.com/andreaxiang/hello-vue#page.html",
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",

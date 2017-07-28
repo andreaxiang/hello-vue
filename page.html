@@ -6,21 +6,58 @@
   </head>
   <body>
     <div id="app">
-      <div class="newTask">
-        <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="输入事项，回车或按Enter添加"/>
-      </div>
-      <ol class="todos">
-        <li v-for="todo in todoList">
-          <input type="checkbox" v-model="todo.done"/>
-          <span class="title">{{ todo.title }}</span>
+      <section id="signInAndSignUp">
+        <div>
+          <label><input type="radio" name="type" value="signUp" v-model="actionType">注册</label>
+          <label><input type="radio" name="type" value="login" v-model="actionType">登录</label>
+        </div>
+        <div class="signUp" v-if="actionType=='signUp'">
+          <form>
+            <div class="formRow">
+              用户名<input type="text">
+            </div>
+            <div class="formRow">
+              邮箱<input type="email">
+            </div>
+            <div class="formRow">
+              密码<input type="password">
+            </div>
+            <div class="formActions">
+              <input type="submit" value="注册">
+            </div>
+          </form>
+        </div>
+        <div class="login" v-if="actionType=='login'">
+          <form>
+            <div class="formRow">
+              用户名<input type="text">
+            </div>
+            <div class="formRow">
+              密码<input type="password">
+            </div>
+            <div class="formActions">
+              <input type="submit" value="登入">
+            </div>
+          </form>
+        </div>
+      </section>
+      <section id="todo">
+        <div class="newTask">
+          <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="输入事项，回车或按Enter添加"/>
+        </div>
+        <ol class="todos">
+          <li v-for="todo in todoList">
+            <input type="checkbox" v-model="todo.done"/>
+            <span class="title">{{ todo.title }}</span>
 
-          <span class="complete-tip" v-if="todo.done"><i class="icon">&#xe765;</i></span>
-          <!--<span v-else><i class="icon">&#xe602;</i></span>-->
+            <span class="complete-tip" v-if="todo.done"><i class="icon">&#xe765;</i></span>
+            <!--<span v-else><i class="icon">&#xe602;</i></span>-->
 
-          <button class="del-btn" @click="removeTodo(todo)">删除</button>
-        </li>
-      </ol>
-      <div class="add-circle"><i class="icon">&#xe638;</i></div>
+            <button class="del-btn" @click="removeTodo(todo)">删除</button>
+          </li>
+        </ol>
+        <div class="add-circle"><i class="icon">&#xe638;</i></div>
+      </section>
     </div>
     <script src="bundle.js"></script>
   </body>
