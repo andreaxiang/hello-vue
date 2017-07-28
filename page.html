@@ -12,7 +12,7 @@
           <label><input type="radio" name="type" value="login" v-model="actionType">登录</label>
         </div>
         <div class="signUp" v-if="actionType ==='signUp'">
-          <form @submit.prevent=signUp><!--注意这里-->
+          <form @submit.prevent="signUp"><!--注意这里-->
             <div class="formRow">
               用户名<input type="text" v-model="formData.username"><!--注意看这里-->
             </div>
@@ -27,8 +27,8 @@
             </div>
           </form>
         </div>
-        <div class="login" v-if="actionType ==='login'">
-          <form>
+        <div class="login" v-if="actionType ==='login'"><!--注意这里-->
+          <form @submit.prevent="login"><!--注意这里-->
             <div class="formRow">
               用户名<input type="text" v-model="formData.username">
             </div>
@@ -50,10 +50,8 @@
           <li v-for="todo in todoList">
             <input type="checkbox" v-model="todo.done"/>
             <span class="title">{{ todo.title }}</span>
-
             <span class="complete-tip" v-if="todo.done"><i class="icon">&#xe765;</i></span>
             <!--<span v-else><i class="icon">&#xe602;</i></span>-->
-
             <button class="del-btn" @click="removeTodo(todo)">删除</button>
           </li>
         </ol>
