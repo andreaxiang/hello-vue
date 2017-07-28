@@ -7,7 +7,7 @@
   <body>
     <div id="app">
       <section id="signInAndSignUp" v-if="!currentUser">
-        <div>
+        <div class="tab-nav">
           <label><input type="radio" name="type" value="signUp" v-model="actionType">注册</label>
           <label><input type="radio" name="type" value="login" v-model="actionType">登录</label>
         </div>
@@ -49,7 +49,7 @@
         <ol class="todos">
           <li v-for="todo in todoList">
             <input type="checkbox" v-model="todo.done"/>
-            <span class="title">{{ todo.title }}</span>
+            <label class="title">{{ todo.title }}</label>
             <span class="complete-tip" v-if="todo.done"><i class="icon">&#xe765;</i></span>
             <!--<span v-else><i class="icon">&#xe602;</i></span>-->
             <button class="del-btn" @click="removeTodo(todo)">删除</button>

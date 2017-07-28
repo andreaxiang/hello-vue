@@ -25,6 +25,7 @@ var app = new Vue({
   created: function(){
     window.onbeforeunload = ()=>{
       // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
+
       let dataString = JSON.stringify(this.todoList)
       window.localStorage.setItem('myTodos', dataString)
       //获取newTodo未发布内容
@@ -35,6 +36,10 @@ var app = new Vue({
     let oldDataString = window.localStorage.getItem('myTodos')
     let oldData = JSON.parse(oldDataString)
     this.todoList = oldData || []
+
+    //检查用户是否登录
+    this.currentUser = this.getCurrentUser();
+
     //本地保存newTodo未发布内容
     let uncompleteDataString = window.localStorage.getItem('typeTodo')
     let uncompleteData = JSON.parse(uncompleteDataString)
@@ -85,9 +90,15 @@ var app = new Vue({
 
     //获取当前登录用户
     getCurrentUser: function(){
-      let {id, createdAt, attributes: {username}} = AV.User.current();
-      // 我的《ES 6 新特性列表》里面有链接：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
-      return {id, username, createdAt} // 看文档：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#ECMAScript_6%E6%96%B0%E6%A0%87%E8%AE%B0
+      //首先要判断用户是否登录
+      let current = AV.User.current()
+      if (current){
+        let {id, createdAt, attributes: {username}} = AV.User.current();
+        // 我的《ES 6 新特性列表》里面有链接：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+        return {id, username, createdAt} // 看文档：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#ECMAScript_6%E6%96%B0%E6%A0%87%E8%AE%B0
+      } else {
+        return null
+      }
     },
 
     //退出登录

@@ -126,8 +126,8 @@ body {
 }
 
 #app .todos> li> .title {
-  font-size: 1.1em;
-  /*padding: .3em;*/
+  font-size: 1em;
+  padding: .3em;
   flex: 1;
   cursor: pointer;
   white-space: nowrap;
@@ -140,6 +140,11 @@ body {
   height:1.2em;
   margin-right: .5em;
   vertical-align: middle;
+}
+
+#app .todos> li input:checked~label {
+  text-decoration: line-through;
+  opacity: .5;
 }
 
 #app .todos> li> .del-btn{
