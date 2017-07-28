@@ -90,6 +90,11 @@ var app = new _vue2.default({
         done: false //添加一个 done 属性
       });
       this.newTodo = ''; //输入完成之后清空
+    },
+    //增加删除功能
+    removeTodo: function removeTodo(todo) {
+      var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
+      this.todoList.splice(index, 1);
     }
   }
 });
