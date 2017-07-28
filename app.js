@@ -1,4 +1,13 @@
 import Vue from 'vue';
+import AV from 'leancloud-storage';
+
+var APP_ID = 'AggQrwzKPp2ouqEdYinh24Fn-gzGzoHsz';
+var APP_KEY = 'p1HN8uq8QtQHX3ashfFaEsJa';
+
+AV.init({
+  appId: APP_ID,
+  appKey: APP_KEY
+});
 
 var app = new Vue({
   el: '#app',
@@ -43,6 +52,21 @@ var app = new Vue({
     removeTodo: function(todo){
       let index = this.todoList.indexOf(todo) // Array.prototype.indexOf 是 ES 5 新加的 API
       this.todoList.splice(index,1)
+    },
+    //注册
+    signUp: function(){
+      // 新建 AVUser 对象实例
+      var user = new AV.User();
+      // 设置用户名
+      user.setUsername(this.formData.username);
+      // 设置密码
+      user.setPassword(this.formData.password);
+      // 设置邮箱
+      user.setEmail(this.formData.email);
+      user.signUp().then(function (loginedUser) {
+        console.log(loginedUser);
+      }, function (error) {
+      });
     }
   }
 })
