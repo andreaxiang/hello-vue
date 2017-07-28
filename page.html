@@ -11,16 +11,16 @@
           <label><input type="radio" name="type" value="signUp" v-model="actionType">注册</label>
           <label><input type="radio" name="type" value="login" v-model="actionType">登录</label>
         </div>
-        <div class="signUp" v-if="actionType=='signUp'">
-          <form>
+        <div class="signUp" v-if="actionType ==='signUp'">
+          <form @submit.prevent=signUp><!--注意这里-->
             <div class="formRow">
-              用户名<input type="text">
+              用户名<input type="text" v-model="formData.username"><!--注意看这里-->
             </div>
             <div class="formRow">
-              邮箱<input type="email">
+              邮箱<input type="email" v-model="formData.email"><!--注意看这里-->
             </div>
             <div class="formRow">
-              密码<input type="password">
+              密码<input type="password" v-model="formData.password"><!--注意看这里-->
             </div>
             <div class="formActions">
               <input type="submit" value="注册">
