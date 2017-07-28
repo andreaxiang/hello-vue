@@ -19,7 +19,8 @@ var app = new Vue({
       password: ''
     },
     newTodo: '',
-    todoList: []
+    todoList: [],
+    currentUser: null //LeanCloud 文档说 AV.User.current() 可以获取当前登录的用户
   },
   created: function(){
     window.onbeforeunload = ()=>{
@@ -48,32 +49,45 @@ var app = new Vue({
       })
       this.newTodo = ''; //输入完成之后清空
     },
+
     //增加删除功能
     removeTodo: function(todo){
       let index = this.todoList.indexOf(todo) // Array.prototype.indexOf 是 ES 5 新加的 API
       this.todoList.splice(index,1)
     },
+
     //注册
     signUp: function(){
       // 新建 AVUser 对象实例
-      var user = new AV.User();
+      let user = new AV.User();
       // 设置用户名
       user.setUsername(this.formData.username);
-      // 设置密码
-      user.setPassword(this.formData.password);
       // 设置邮箱
       user.setEmail(this.formData.email);
-      user.signUp().then(function (loginedUser) {
-        console.log(loginedUser);
-      }, function (error) {
+      // 设置密码
+      user.setPassword(this.formData.password);
+
+      user.signUp().then((loginedUser)=> { //将 function 改成箭头函数，方便使用 this
+        this.currentUser = this.getCurrentUser()  //获取当前登录用户
+      }, (error)=> {
+        alert('注册失败，请检查')
       });
     },
+
     //登录
     login: function(){
-      AV.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
-        console.log(loginedUser);
-      }, function (error) {
+      AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser)=> {
+        this.currentUser = this.getCurrentUser()  //获取当前登录用户
+      }, (error)=> {
+        alert('登录失败，请检查')
       });
+    },
+
+    //获取当前登录用户
+    getCurrentUser: function(){
+      let {id, createdAt, attrubutes: {username}} = AV.User.current();
+      // 我的《ES 6 新特性列表》里面有链接：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+      return {id, username, createdAt} // 看文档：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Object_initializer#ECMAScript_6%E6%96%B0%E6%A0%87%E8%AE%B0
     }
   }
 })

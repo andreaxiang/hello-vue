@@ -6,7 +6,7 @@
   </head>
   <body>
     <div id="app">
-      <section id="signInAndSignUp">
+      <section id="signInAndSignUp" v-if="!currentUser">
         <div>
           <label><input type="radio" name="type" value="signUp" v-model="actionType">注册</label>
           <label><input type="radio" name="type" value="login" v-model="actionType">登录</label>
@@ -27,7 +27,7 @@
             </div>
           </form>
         </div>
-        <div class="login" v-if="actionType=='login'">
+        <div class="login" v-if="actionType ==='login'">
           <form>
             <div class="formRow">
               用户名<input type="text" v-model="formData.username">
@@ -41,7 +41,7 @@
           </form>
         </div>
       </section>
-      <section id="todo">
+      <section id="todo" v-if="currentUser">
         <div class="newTask">
           <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="输入事项，回车或按Enter添加"/>
         </div>
