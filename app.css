@@ -188,7 +188,7 @@ body {
 
 #app .todos> li> .complete-tip i {
   margin-right:1em;
-  font-size:1.8em;
+  font-size:2em;
   font-style: normal;
   vertical-align:middle;
   color:#aaa;
@@ -220,7 +220,7 @@ body {
   cursor: pointer;
 }
 
-#app #todo a>.icon {
+#app #todo a .icon {
   color:#50e3a4;
   font-size: 1.1em;
   margin-right: .2em;
