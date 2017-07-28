@@ -2,22 +2,25 @@
   <head>
    <meta charset='utf-8'>
     <title>vue-todo</title>
+    <link rel="stylesheet" href="app.css"/>
   </head>
   <body>
     <div id="app">
       <div class="newTask">
-        <input type="text" v-model="newTodo" @keypress.enter="addTodo"/>
+        <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="输入事项，回车或按Enter添加"/>
       </div>
       <ol class="todos">
         <li v-for="todo in todoList">
-          <input type="checkbox" v-model="todo.done"/>{{ todo.title }}
+          <input type="checkbox" v-model="todo.done"/>
+          <span class="title">{{ todo.title }}</span>
 
-          <span v-if="todo.done">已完成</span>
-          <span v-else>未完成</span>
+          <span class="complete-tip" v-if="todo.done"><i class="icon">&#xe765;</i></span>
+          <!--<span v-else><i class="icon">&#xe602;</i></span>-->
 
-          <button @click="removeTodo(todo)">删除</button>
+          <button class="del-btn" @click="removeTodo(todo)">删除</button>
         </li>
       </ol>
+      <div class="add-circle"><i class="icon">&#xe638;</i></div>
     </div>
     <script src="bundle.js"></script>
   </body>

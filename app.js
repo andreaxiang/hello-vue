@@ -15,7 +15,7 @@ var app = new Vue({
     let oldDataString = window.localStorage.getItem('myTodos')
     let oldData = JSON.parse(oldDataString)
     this.todoList = oldData || []
-    
+
   },
   methods: {
     addTodo: function(){

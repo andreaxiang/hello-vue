@@ -1,0 +1,200 @@
+/*V1.0版本样式表*/
+/* css reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::after {
+  box-sizing: border-box;
+}
+
+*::before {
+  box-sizing: border-box;
+}
+
+ul, ol, dl {
+  list-style: none;
+}
+
+a {
+  color: #616473;
+}
+
+a:hover {
+  color: #50e3a4;
+}
+
+/* iconfont */
+@font-face {
+  font-family: 'iconfont';  /* project id 348003 */
+  src: url('//at.alicdn.com/t/font_1sjaa9oj69cz0k9.eot');
+  src: url('//at.alicdn.com/t/font_1sjaa9oj69cz0k9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1sjaa9oj69cz0k9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1sjaa9oj69cz0k9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1sjaa9oj69cz0k9.svg#iconfont') format('svg');
+}
+
+.icon {
+  font-family: 'iconfont' !important;
+}
+
+i {
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #f0efe9;
+  color: #616473;
+}
+
+/* common css */
+#app {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width:50%;
+  height: 90%;
+  background-color: #fff;
+  font-family: 'Microsoft Yahei';
+  margin-top: 2em;
+  margin-right:auto;
+  margin-left: auto;
+  padding: 2em 0 2em 0;
+  box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.15);
+}
+
+#app .newTask {
+  display: flex;
+  width: 100%;
+  padding: 1em;
+}
+
+#app .newTask>input {
+  width: 100%;
+  line-height: 1.8;
+  font-size: 16px;
+  height: 3em;
+  padding: .5em;
+  outline: none;
+  border: 1px solid #50e3a4;
+}
+
+::-webkit-input-placeholder {
+  font-family: arial;
+  font-weight: lighter;
+  color: #bbb;
+}
+
+#app .todos {
+  width:100%;
+  padding:.5em;
+  margin:0 auto;
+  height: 100%;
+}
+
+#app .todos> li{
+  padding:1em;
+  width: 98%;
+  margin: 0 auto;
+  color: #3e434f;
+  border-bottom: 1px solid #eee;
+  transition: .2s all ease;
+}
+
+#app .todos> li:hover{
+  background: rgba(250,250,250,1);
+  border-bottom: 1px solid #50e3a4;
+  transition: .3s all ease;
+}
+
+#app .todos> li {
+  display: flex;
+  height: 3em;
+  align-items: center;
+  position:relative;
+}
+
+#app .todos> li> .title {
+  font-size: 1.1em;
+  /*padding: .3em;*/
+  flex: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#app .todos> li input[type="checkbox"] {
+  width:1.2em;
+  height:1.2em;
+  margin-right: .5em;
+  vertical-align: middle;
+}
+
+#app .todos> li> .del-btn{
+  z-index: 100;
+  position:absolute;
+  top:25%;
+  right:.5em;
+  border: 1px solid #e0e0e0;
+  background:none;
+  color: #666;
+  outline:none;
+  font-size: .5em;
+  border-radius:3px;
+  padding:.3em .5em;
+  cursor: pointer;
+  opacity: 0;
+}
+
+#app .todos> li> .del-btn:hover {
+  color:#ff4f4a;
+  border: 1px solid #ff4f4a;
+  transition: all .5s;
+  -webkit-transition: all .5s;
+  -o-transition: all .5s;
+  -moz-transition: all .5s;
+}
+
+#app .todos> li:hover .del-btn {
+  opacity: 1;
+  transition: all .5s;
+  -webkit-transition: all .5s;
+  -o-transition: all .5s;
+  -moz-transition: all .5s;
+}
+
+#app .todos> li .complete-tip {
+  margin-left:.3em;
+  margin-right:.3em;
+}
+
+#app .todos> li> .complete-tip i {
+  margin-right:1em;
+  font-size:1.8em;
+  font-style: normal;
+  vertical-align:middle;
+  color:#aaa;
+}
+
+#app .add-circle {
+  width:4em;
+  height:4em;
+  position:absolute;
+  bottom:0;
+  left:50%;
+  margin-left:-1em;
+  margin-bottom:1em;
+  cursor: pointer;
+}
+
+#app .icon {
+  color:#50e3a4;
+  font-size:4em;
+}
