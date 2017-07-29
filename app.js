@@ -103,9 +103,10 @@ var app = new Vue({
 
     //退出登录
     logout: function(){
-      AV.User.logout()
+      AV.User.logOut()
       this.currentUser = null
       window.location.reload()
-    }
+    },
+
   }
 })

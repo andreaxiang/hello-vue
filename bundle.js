@@ -385,7 +385,7 @@ var app = new _vue2.default({
 
     //退出登录
     logout: function logout() {
-      _leancloudStorage2.default.User.logout();
+      _leancloudStorage2.default.User.logOut();
       this.currentUser = null;
       window.location.reload();
     }
