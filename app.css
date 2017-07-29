@@ -65,7 +65,7 @@ body {
   margin-top: 2em;
   margin-right:auto;
   margin-left: auto;
-  padding: 2em 0 2em 0;
+  padding: 1em 0 1em 0;
   box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.15);
 }
 
@@ -205,14 +205,53 @@ body {
   cursor: pointer;
 }
 
-#app .icon {
+#app .add-circle .icon {
   color:#50e3a4;
   font-size:4em;
 }
 
-#app #todo a {
+#app #todo .caption {
+  display: flex;
+  justify-content: center;
+  width:100%;
+  margin:.3em 0 1em 0;
+  font-weight:400;
+  color:#616473;
+  opacity:.5;
+}
+
+#app .header {
+  position:relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  background: #fff;
+  padding:.1em .5em;
+  color:#FFF;
+  vertical-align: middle;
+  justify-content: space-between;
+}
+
+#app .header h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  color: #616473;
+  font-weight: normal;
+  margin: 0;
+}
+
+#app .header h1 .icon {
+  color:#50e3a4;
+  font-size: 2em;
+  margin:0 .3em 0 .6em;
+  vertical-align: middle;
+}
+
+#app .header .logout-btn {
   position:absolute;
-  top:1em;
+  top:.5em;
   right:1em;
   font-size: 1em;
   color: #616473;
@@ -220,7 +259,7 @@ body {
   cursor: pointer;
 }
 
-#app #todo a .icon {
+#app .header>.logout-btn>.icon {
   color:#50e3a4;
   font-size: 1.1em;
   margin-right: .2em;

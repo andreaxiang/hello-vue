@@ -42,8 +42,13 @@
         </div>
       </section>
       <section id="todo" v-if="currentUser">
-        <a @click="logout"><i class="icon">&#xe606;</i>退出登录</a>
-        <!--<p><button @click="logout">退出登录</button></p>-->
+        <h1 class="caption">Days Todo List</h1>
+        <nav class="header">
+          <h1>
+            <i class="icon">&#xe639;</i>{{ this.formData.username }}
+          </h1>
+          <a class="logout-btn" @click="logout"><i class="icon">&#xe606;</i>退出</a>
+        </nav>
         <div class="newTask">
           <input type="text" v-model="newTodo" @keypress.enter="addTodo" placeholder="输入待办事项，回车或按Enter添加"/>
         </div>
