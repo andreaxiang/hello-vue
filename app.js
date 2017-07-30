@@ -61,7 +61,14 @@ var app = new Vue({
       let dataString = JSON.stringify(this.todoList)
       var AVTodos = AV.Object.extend('AllTodos');
       var avTodos = new AVTodos();
+      
+      //添加访问控制
+      var acl = new AV.ACL()
+      acl.setReadAccess(AV.User.current(), true) //只有这个 user 能读
+      acl.setWriteAccess(AV.User.current(), true) //只有这个 user 能写
+
       avTodos.set('content', dataString);
+      avTodos.setACL(acl) //设置访问控制
       avTodos.save().then(function(todo){
         //保存成功后，执行其他逻辑
         console.log('保存成功');
