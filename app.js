@@ -41,18 +41,7 @@ var app = new Vue({
     this.currentUser = this.getCurrentUser();
 
     //获取 User 的 AllTodos
-    if(this.currentUser){
-      var query = new AV.Query('AllTodos');
-      query.find().then((todos) => {
-        let avAllTodos = todos[0] //理论上 AllTodos 只有一个，所以我们取结果的第一项
-        let id = avAllTodos.id
-        this.todoList = JSON.parse(avAllTodos.attributes.content)
-        this.todoList.id = id //为什么给 todoList 这个数组设置 id？因为数组也是对象啊
-
-      },function(error){
-        console.error(error)
-      })
-    }
+    this.fetchTodos() // 将原来写的的一堆代码取一个名字叫做 fetchTodos
 
     //本地保存newTodo未发布内容
     let uncompleteDataString = window.localStorage.getItem('typeTodo')
@@ -61,6 +50,7 @@ var app = new Vue({
   },
 
   methods: {
+
     addTodo: function(){
       this.todoList.push({
         title: this.newTodo,
@@ -111,6 +101,21 @@ var app = new Vue({
       }
     },
 
+    fetchTodos: function(){
+      if(this.currentUser) {
+        var query = new AV.Query('AllTodos');
+        query.find().then((todos) => {
+          let avAllTodos = todos[0] //理论上 AllTodos 只有一个，所以我们取结果的第一项
+          let id = avAllTodos.id
+          this.todoList = JSON.parse(avAllTodos.attributes.content)
+          this.todoList.id = id //为什么给 todoList 这个数组设置 id？因为数组也是对象啊
+
+        }, function (error) {
+          console.error(error)
+        })
+      }
+    },
+
     //删除功能
     removeTodo: function(todo){
       let index = this.todoList.indexOf(todo) // Array.prototype.indexOf 是 ES 5 新加的 API
@@ -141,6 +146,7 @@ var app = new Vue({
     login: function(){
       AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser)=> {
         this.currentUser = this.getCurrentUser()  //获取当前登录用户
+        this.fetchTodos()  //登录成功后读取 todos
       }, (error)=> {
         console.log(error)
       });

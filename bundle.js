@@ -311,17 +311,7 @@ var app = new _vue2.default({
     this.currentUser = this.getCurrentUser();
 
     //获取 User 的 AllTodos
-    if (this.currentUser) {
-      var query = new _leancloudStorage2.default.Query('AllTodos');
-      query.find().then(function (todos) {
-        var avAllTodos = todos[0]; //理论上 AllTodos 只有一个，所以我们取结果的第一项
-        var id = avAllTodos.id;
-        _this.todoList = JSON.parse(avAllTodos.attributes.content);
-        _this.todoList.id = id; //为什么给 todoList 这个数组设置 id？因为数组也是对象啊
-      }, function (error) {
-        console.error(error);
-      });
-    }
+    this.fetchTodos(); // 将原来写的的一堆代码取一个名字叫做 fetchTodos
 
     //本地保存newTodo未发布内容
     var uncompleteDataString = window.localStorage.getItem('typeTodo');
@@ -330,6 +320,7 @@ var app = new _vue2.default({
   },
 
   methods: {
+
     addTodo: function addTodo() {
       this.todoList.push({
         title: this.newTodo,
@@ -381,6 +372,22 @@ var app = new _vue2.default({
       }
     },
 
+    fetchTodos: function fetchTodos() {
+      var _this3 = this;
+
+      if (this.currentUser) {
+        var query = new _leancloudStorage2.default.Query('AllTodos');
+        query.find().then(function (todos) {
+          var avAllTodos = todos[0]; //理论上 AllTodos 只有一个，所以我们取结果的第一项
+          var id = avAllTodos.id;
+          _this3.todoList = JSON.parse(avAllTodos.attributes.content);
+          _this3.todoList.id = id; //为什么给 todoList 这个数组设置 id？因为数组也是对象啊
+        }, function (error) {
+          console.error(error);
+        });
+      }
+    },
+
     //删除功能
     removeTodo: function removeTodo(todo) {
       var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
@@ -390,7 +397,7 @@ var app = new _vue2.default({
 
     //注册
     signUp: function signUp() {
-      var _this3 = this;
+      var _this4 = this;
 
       // 新建 AVUser 对象实例
       var user = new _leancloudStorage2.default.User();
@@ -403,7 +410,7 @@ var app = new _vue2.default({
 
       user.signUp().then(function (loginedUser) {
         //将 function 改成箭头函数，方便使用 this
-        _this3.currentUser = _this3.getCurrentUser(); //获取当前登录用户
+        _this4.currentUser = _this4.getCurrentUser(); //获取当前登录用户
       }, function (error) {
         alert('注册失败，请检查');
         console.log(error);
@@ -412,10 +419,11 @@ var app = new _vue2.default({
 
     //登录
     login: function login() {
-      var _this4 = this;
+      var _this5 = this;
 
       _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
-        _this4.currentUser = _this4.getCurrentUser(); //获取当前登录用户
+        _this5.currentUser = _this5.getCurrentUser(); //获取当前登录用户
+        _this5.fetchTodos(); //登录成功后读取 todos
       }, function (error) {
         console.log(error);
       });
