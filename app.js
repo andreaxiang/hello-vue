@@ -9,15 +9,25 @@ var app = new Vue({
   created: function(){
     window.onbeforeunload = ()=>{
       let dataString = JSON.stringify(this.todoList)
-      window.localStorage.setItem('myTodos', dataString)
+
+      var AVTodos = AV.Object.extend('AllTodos');
+      var avTodos = new AVTodos();
+      avTodos.set('content', dataString);
+      avTodos.save().then(function(todo){
+        //保存成功后，执行其他逻辑
+        console.log('保存成功');
+      },function(error){
+        console.error('保存失败');
+      })
 
       let oneditString = JSON.stringify(this.newTodo)
       window.localStorage.setItem('typeTodo', oneditString)
     }
 
-    let oldDataString = window.localStorage.getItem('myTodos')
+    //从 LeanCloud 读取 todos 的逻辑先不写
+    /*let oldDataString = window.localStorage.getItem('myTodos')
     let oldData = JSON.parse(oldDataString)
-    this.todoList = oldData || []
+    this.todoList = oldData || []*/
 
     let uncompleteDataString = window.localStorage.getItem('typeTodo')
     let uncompleteData = JSON.parse(uncompleteDataString)
