@@ -313,7 +313,10 @@ var app = new _vue2.default({
     if (this.currentUser) {
       var query = new _leancloudStorage2.default.Query('AllTodos');
       query.find().then(function (todos) {
-        console.log(todos);
+        var avAllTodos = todos[0]; //理论上 AllTodos 只有一个，所以我们取结果的第一项
+        var id = avAllTodos.id;
+        _this.todoList = JSON.parse(avAllTodos.attributes.content);
+        _this.todoList.id = id; //为什么给 todoList 这个数组设置 id？因为数组也是对象啊
       }, function (error) {
         console.error(error);
       });
@@ -333,10 +336,12 @@ var app = new _vue2.default({
         done: false //添加一个 done 属性
       });
       this.newTodo = ''; //输入完成之后清空newTodo
-      this.saveTodos();
+      this.saveOrUpdateTodos(); //// 不能再用 this.saveTodos() 了
     },
 
     saveTodos: function saveTodos() {
+      var _this2 = this;
+
       var dataString = JSON.stringify(this.todoList);
       var AVTodos = _leancloudStorage2.default.Object.extend('AllTodos');
       var avTodos = new AVTodos();
@@ -350,22 +355,41 @@ var app = new _vue2.default({
       avTodos.setACL(acl); //设置访问控制
       avTodos.save().then(function (todo) {
         //保存成功后，执行其他逻辑
-        console.log('保存成功');
+        _this2.todoList.id = todo.id; //一定要把 id 挂到 this.todoList 上，否则下次就不会调用 updateTodos 了
+        alert('保存成功');
       }, function (error) {
-        console.error('保存失败');
+        alert('保存失败');
       });
+    },
+
+    updateTodos: function updateTodos() {
+      //先看文档 https://leancloud.cn/docs/leanstorage_guide-js.html#更新对象
+      var dataString = JSON.stringify(this.todoList); //JSON 在序列化这个有 id 的数组的时候，会得出怎样的结果？
+      var avTodos = _leancloudStorage2.default.Object.createWithoutData('AllTodos', this.todoList.id);
+      avTodos.set('content', dataString);
+      avTodos.save().then(function () {
+        console.log('更新成功');
+      });
+    },
+
+    saveOrUpdateTodos: function saveOrUpdateTodos() {
+      if (this.todoList.id) {
+        this.updateTodos();
+      } else {
+        this.saveTodos();
+      }
     },
 
     //删除功能
     removeTodo: function removeTodo(todo) {
       var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
       this.todoList.splice(index, 1);
-      this.saveTodos();
+      this.saveOrUpdateTodos(); //// 不能再用 this.saveTodos() 了
     },
 
     //注册
     signUp: function signUp() {
-      var _this2 = this;
+      var _this3 = this;
 
       // 新建 AVUser 对象实例
       var user = new _leancloudStorage2.default.User();
@@ -378,7 +402,7 @@ var app = new _vue2.default({
 
       user.signUp().then(function (loginedUser) {
         //将 function 改成箭头函数，方便使用 this
-        _this2.currentUser = _this2.getCurrentUser(); //获取当前登录用户
+        _this3.currentUser = _this3.getCurrentUser(); //获取当前登录用户
       }, function (error) {
         alert('注册失败，请检查');
       });
@@ -386,10 +410,10 @@ var app = new _vue2.default({
 
     //登录
     login: function login() {
-      var _this3 = this;
+      var _this4 = this;
 
       _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
-        _this3.currentUser = _this3.getCurrentUser(); //获取当前登录用户
+        _this4.currentUser = _this4.getCurrentUser(); //获取当前登录用户
       }, function (error) {
         alert('登录失败，请检查');
       });
