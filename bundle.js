@@ -408,13 +408,26 @@ var app = new _vue2.default({
       // 设置密码
       user.setPassword(this.formData.password);
 
-      user.signUp().then(function (loginedUser) {
-        //将 function 改成箭头函数，方便使用 this
-        _this4.currentUser = _this4.getCurrentUser(); //获取当前登录用户
-      }, function (error) {
-        alert('注册失败，请检查');
-        console.log(error);
-      });
+      //正则判断用户注册信息
+      if (/^\w+@[\w-]+\.\w+(\.\w+)?$/.test(this.formData.email)) {
+        if (/\w{3,}/.test(this.formData.username)) {
+          if (/\w{6,}/.test(this.formData.password)) {
+            user.signUp().then(function (loginedUser) {
+              //将 function 改成箭头函数，方便使用 this
+              _this4.currentUser = _this4.getCurrentUser(); //获取当前登录用户
+            }, function (error) {
+              alert('注册失败，请检查');
+              console.log(error);
+            });
+          } else {
+            alert("密码不能小于6个字符");
+          }
+        } else {
+          alert("用户名必须大于3个字符");
+        }
+      } else {
+        alert("邮箱格式不正确");
+      }
     },
 
     //登录
