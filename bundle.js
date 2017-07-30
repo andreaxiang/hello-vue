@@ -60,7 +60,6 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
@@ -256,25 +255,11 @@ process.umask = function() { return 0; };
 
 /***/ }),
 /* 1 */
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-<<<<<<< HEAD
-var _vue = __webpack_require__(1);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var app = new _vue2.default({
-  el: '#app',
-  data: {
-    newTodo: '',
-    todoList: []
-=======
 var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
@@ -305,46 +290,22 @@ var app = new _vue2.default({
     newTodo: '',
     todoList: [],
     currentUser: null //LeanCloud 文档说 AV.User.current() 可以获取当前登录的用户
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
   },
   created: function created() {
     var _this = this;
 
     window.onbeforeunload = function () {
-<<<<<<< HEAD
-      var dataString = JSON.stringify(_this.todoList);
 
-      var AVTodos = AV.Object.extend('AllTodos');
-      var avTodos = new AVTodos();
-      avTodos.set('content', dataString);
-      avTodos.save().then(function (todo) {
-        //保存成功后，执行其他逻辑
-        console.log('保存成功');
-      }, function (error) {
-        console.error('保存失败');
-      });
-
-=======
-      // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
-
-      var dataString = JSON.stringify(_this.todoList);
       window.localStorage.setItem('myTodos', dataString);
       //获取newTodo未发布内容
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
       var oneditString = JSON.stringify(_this.newTodo);
       window.localStorage.setItem('typeTodo', oneditString);
     };
 
-<<<<<<< HEAD
     //从 LeanCloud 读取 todos 的逻辑先不写
     /*let oldDataString = window.localStorage.getItem('myTodos')
     let oldData = JSON.parse(oldDataString)
     this.todoList = oldData || []*/
-
-=======
-    var oldDataString = window.localStorage.getItem('myTodos');
-    var oldData = JSON.parse(oldDataString);
-    this.todoList = oldData || [];
 
     //检查用户是否登录
     this.currentUser = this.getCurrentUser();
@@ -354,6 +315,7 @@ var app = new _vue2.default({
     var uncompleteData = JSON.parse(uncompleteDataString);
     this.newTodo = uncompleteData || [];
   },
+
   methods: {
     addTodo: function addTodo() {
       this.todoList.push({
@@ -361,19 +323,28 @@ var app = new _vue2.default({
         createdAt: new Date(),
         done: false //添加一个 done 属性
       });
-      this.newTodo = ''; //输入完成之后清空
-    },
-    //增加删除功能
-    removeTodo: function removeTodo(todo) {
-      var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
-      this.todoList.splice(index, 1);
       this.newTodo = ''; //输入完成之后清空newTodo
+      this.saveTodos();
+    },
+
+    saveTodos: function saveTodos() {
+      var dataString = JSON.stringify(this.todoList);
+      var AVTodos = _leancloudStorage2.default.Object.extend('AllTodos');
+      var avTodos = new AVTodos();
+      avTodos.set('content', dataString);
+      avTodos.save().then(function (todo) {
+        //保存成功后，执行其他逻辑
+        console.log('保存成功');
+      }, function (error) {
+        console.error('保存失败');
+      });
     },
 
     //删除功能
     removeTodo: function removeTodo(todo) {
       var index = this.todoList.indexOf(todo); // Array.prototype.indexOf 是 ES 5 新加的 API
       this.todoList.splice(index, 1);
+      this.saveTodos();
     },
 
     //注册
@@ -432,17 +403,13 @@ var app = new _vue2.default({
       _leancloudStorage2.default.User.logOut();
       this.currentUser = null;
       window.location.reload();
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
     }
+
   }
 });
 
 /***/ }),
-<<<<<<< HEAD
-/* 1 */
-=======
 /* 2 */
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10534,201 +10501,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-<<<<<<< HEAD
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)))
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-=======
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(3)))
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
 
 /***/ }),
 /* 3 */
@@ -10757,8 +10530,6 @@ try {
 module.exports = g;
 
 
-<<<<<<< HEAD
-=======
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10787,6 +10558,5 @@ t.exports=function(t){return null!=t&&(n(t)||r(t)||!!t._isBuffer)}},function(t,e
 //# sourceMappingURL=av-min.js.map
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
->>>>>>> bfc243cdb7fe863f68defde5c8657b82ed289f29
 /***/ })
 /******/ ]);
