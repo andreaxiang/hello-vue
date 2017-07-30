@@ -39,6 +39,15 @@ var app = new Vue({
 
     //检查用户是否登录
     this.currentUser = this.getCurrentUser();
+    //获取 User 的 AllTodos
+    if(this.currentUser){
+      var query = new AV.Query('AllTodos');
+      query.find().then(function(todos){
+        console.log(todos)
+      },function(error){
+        console.error(error)
+      })
+    }
 
     //本地保存newTodo未发布内容
     let uncompleteDataString = window.localStorage.getItem('typeTodo')
@@ -61,7 +70,7 @@ var app = new Vue({
       let dataString = JSON.stringify(this.todoList)
       var AVTodos = AV.Object.extend('AllTodos');
       var avTodos = new AVTodos();
-      
+
       //添加访问控制
       var acl = new AV.ACL()
       acl.setReadAccess(AV.User.current(), true) //只有这个 user 能读

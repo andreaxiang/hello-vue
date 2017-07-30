@@ -309,6 +309,15 @@ var app = new _vue2.default({
 
     //检查用户是否登录
     this.currentUser = this.getCurrentUser();
+    //获取 User 的 AllTodos
+    if (this.currentUser) {
+      var query = new _leancloudStorage2.default.Query('AllTodos');
+      query.find().then(function (todos) {
+        console.log(todos);
+      }, function (error) {
+        console.error(error);
+      });
+    }
 
     //本地保存newTodo未发布内容
     var uncompleteDataString = window.localStorage.getItem('typeTodo');
