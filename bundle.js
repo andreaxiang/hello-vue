@@ -309,6 +309,7 @@ var app = new _vue2.default({
 
     //检查用户是否登录
     this.currentUser = this.getCurrentUser();
+
     //获取 User 的 AllTodos
     if (this.currentUser) {
       var query = new _leancloudStorage2.default.Query('AllTodos');
@@ -356,7 +357,7 @@ var app = new _vue2.default({
       avTodos.save().then(function (todo) {
         //保存成功后，执行其他逻辑
         _this2.todoList.id = todo.id; //一定要把 id 挂到 this.todoList 上，否则下次就不会调用 updateTodos 了
-        alert('保存成功');
+        console.log('保存成功');
       }, function (error) {
         alert('保存失败');
       });
@@ -405,6 +406,7 @@ var app = new _vue2.default({
         _this3.currentUser = _this3.getCurrentUser(); //获取当前登录用户
       }, function (error) {
         alert('注册失败，请检查');
+        console.log(error);
       });
     },
 
@@ -415,7 +417,7 @@ var app = new _vue2.default({
       _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
         _this4.currentUser = _this4.getCurrentUser(); //获取当前登录用户
       }, function (error) {
-        alert('登录失败，请检查');
+        console.log(error);
       });
     },
 

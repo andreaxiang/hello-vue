@@ -39,6 +39,7 @@ var app = new Vue({
 
     //检查用户是否登录
     this.currentUser = this.getCurrentUser();
+
     //获取 User 的 AllTodos
     if(this.currentUser){
       var query = new AV.Query('AllTodos');
@@ -85,7 +86,7 @@ var app = new Vue({
       avTodos.save().then((todo) => {
         //保存成功后，执行其他逻辑
         this.todoList.id = todo.id //一定要把 id 挂到 this.todoList 上，否则下次就不会调用 updateTodos 了
-        alert('保存成功');
+        console.log('保存成功');
       },function(error){
         alert('保存失败');
       });
@@ -132,6 +133,7 @@ var app = new Vue({
         this.currentUser = this.getCurrentUser()  //获取当前登录用户
       }, (error)=> {
         alert('注册失败，请检查')
+        console.log(error)
       });
     },
 
@@ -140,7 +142,7 @@ var app = new Vue({
       AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser)=> {
         this.currentUser = this.getCurrentUser()  //获取当前登录用户
       }, (error)=> {
-        alert('登录失败，请检查')
+        console.log(error)
       });
     },
 
